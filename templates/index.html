@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2 { color: #333; }
+        form { margin-bottom: 20px; }
+        label { display: inline-block; width: 100px; }
+        input[type="text"] { padding: 5px; margin-bottom: 10px; }
+        input[type="submit"] { padding: 8px 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>SQL Injection Demo</h1>
+
+    <h2>Vulnerable Login</h2>
+    <form action="/vulnerable" method="POST">
+        <label for="username_vuln">Username:</label>
+        <input type="text" id="username_vuln" name="username"><br>
+        <label for="password_vuln">Password:</label>
+        <input type="text" id="password_vuln" name="password"><br>
+        <input type="submit" value="Login (Vulnerable)">
+    </form>
+
+    <h2>Secure Login</h2>
+    <form action="/secure" method="POST">
+        <label for="username_secure">Username:</label>
+        <input type="text" id="username_secure" name="username"><br>
+        <label for="password_secure">Password:</label>
+        <input type="text" id="password_secure" name="password"><br>
+        <input type="submit" value="Login (Secure)">
+    </form>
+</body>
+</html>

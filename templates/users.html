@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2 { color: #333; }
+        table { border-collapse: collapse; width: 50%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Login Successful ({{ login_type }})</h1>
+
+    {% if logged_in_user == 'admin' %}
+        <h2>Users Table</h2>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Welcome, {{ logged_in_user }}!</p>
+    {% endif %}
+
+    <a href="/">Back to Login</a>
+</body>
+</html>
