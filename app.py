@@ -6,11 +6,21 @@ app = Flask(__name__)
 def init_db():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)''')
-    # Insert sample users for testing
+    # Create table with UNIQUE constraint on username
+    c.execute('''CREATE TABLE IF NOT EXISTS users (
+        username TEXT UNIQUE,
+        password TEXT
+    )''')
+    # Insert sample users for testing (skips duplicates due to UNIQUE)
     c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('admin', 'secret123'))
     c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('user1', 'pass456'))
     c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('user2', 'qwerty789'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('marco', '05272003'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('joshua', 'Peregrin123'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('eric', '12collantes3'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('veronica', 'president'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('kyliene', 'mistica123'))
+    c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ('dannieka', '123mackay'))
     conn.commit()
     conn.close()
 
@@ -28,7 +38,7 @@ def vulnerable_login(username, password):
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
     # Directly concatenating user input, such as {username} which can be used to inject SQL such as ' OR '1'='1
-    query = f"SELECT username FROM users WHERE username = '{username}' AND password = '{password}'"
+    query = f"SELECT username FROM users WHERE username = '{username}' AND password = '{password}' ORDER BY username ASC" #<-- Remove ORDER BY for unique scenario
     c.execute(query)
     result = c.fetchone()
     conn.close()
